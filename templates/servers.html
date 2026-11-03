@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Servers — Server monitor{% endblock %}
+{% block content %}
+  <div class="panel">
+    <p class="placeholder">Server list placeholder.</p>
+    <form method="post" action="{{ url_for('sign_out') }}">
+      <button type="submit">Sign out</button>
+    </form>
+  </div>
+{% endblock %}

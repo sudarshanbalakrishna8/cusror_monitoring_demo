@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Sign in — Server monitor{% endblock %}
+{% block content %}
+  <form class="form" method="post" action="{{ url_for('sign_in') }}">
+    <label>
+      Username
+      <input name="username" autocomplete="username" required>
+    </label>
+    <label>
+      Password
+      <input type="password" name="password" autocomplete="current-password" required>
+    </label>
+    {% if error %}
+      <p class="error" role="alert">{{ error }}</p>
+    {% endif %}
+    <button type="submit">Sign in</button>
+  </form>
+{% endblock %}
