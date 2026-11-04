@@ -22,6 +22,10 @@ body {
 }
 
 .banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
   padding: 2rem 1.5rem 1.25rem;
   background: var(--card);
   border-bottom: 4px solid var(--accent);
@@ -48,12 +52,16 @@ h1 {
   border-radius: 12px;
 }
 
-.form,
 .panel {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.5rem;
+}
+
+.form {
   display: grid;
   gap: 1rem;
   max-width: 22rem;
-  padding: 1.5rem;
 }
 
 label {
@@ -83,14 +91,86 @@ button {
   cursor: pointer;
 }
 
+button.quiet {
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+}
+
 .error {
   margin: 0;
   color: #8d1d1d;
   font-weight: 650;
 }
 
-.placeholder {
+.placeholder,
+.meta,
+.status {
   margin: 0;
+}
+
+.server-name {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 650;
+}
+
+.meta,
+.status {
+  color: var(--muted);
+}
+
+.cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.card {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.value,
+.facts {
+  margin: 0.4rem 0 0;
+}
+
+.value {
+  font-size: 1.6rem;
+}
+
+.facts {
+  padding-left: 1.1rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+a {
+  color: var(--accent);
+  font-weight: 650;
 }
 
 @media (min-width: 720px) {
@@ -107,5 +187,9 @@ button {
 
   .content {
     width: min(960px, calc(100% - 3rem));
+  }
+
+  .cards {
+    grid-template-columns: 1fr 1fr;
   }
 }

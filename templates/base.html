@@ -8,8 +8,15 @@
 </head>
 <body>
   <header class="banner">
-    <h1>Server monitor</h1>
-    <p class="intro">A local, read-only view of this Linux machine.</p>
+    <div>
+      <h1>Server monitor</h1>
+      <p class="intro">A local, read-only view of this Linux machine.</p>
+    </div>
+    {% if signed_in %}
+      <form method="post" action="{{ url_for('sign_out') }}">
+        <button type="submit">Sign out</button>
+      </form>
+    {% endif %}
   </header>
   <main class="content">
     {% block content %}{% endblock %}

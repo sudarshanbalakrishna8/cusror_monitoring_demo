@@ -2,9 +2,52 @@
 {% block title %}Servers — Server monitor{% endblock %}
 {% block content %}
   <div class="panel">
-    <p class="placeholder">Server list placeholder.</p>
-    <form method="post" action="{{ url_for('sign_out') }}">
-      <button type="submit">Sign out</button>
+    {% if error %}
+      <p class="error" role="alert">{{ error }}</p>
+    {% endif %}
+    {% if servers %}
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for server in servers %}
+              <tr>
+                <td><a href="{{ url_for('server_detail', server_id=server.id) }}">{{ server.name }}</a></td>
+                <td>{{ server.address }}</td>
+                <td>{{ server.status }}</td>
+                <td>
+                  <form method="post" action="{{ url_for('remove_server_route') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="id" value="{{ server.id }}">
+                    <button type="submit" class="quiet">Remove</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="placeholder">{{ empty_prompt }}</p>
+    {% endif %}
+    <form class="form" method="post" action="{{ url_for('add_server_route') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label>
+        Display name
+        <input name="name" maxlength="80" required>
+      </label>
+      <label>
+        Address
+        <input name="address" maxlength="253" required>
+      </label>
+      <button type="submit">Add server</button>
     </form>
   </div>
 {% endblock %}

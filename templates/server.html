@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}{{ server.name }} — Server monitor{% endblock %}
+{% block content %}
+  <div class="panel">
+    <p class="server-name">{{ server.name }}</p>
+    <p class="meta">{{ server.address }}</p>
+    <p class="status">{{ status }}</p>
+    {% if status != "This host" %}
+      <p>{{ message }}</p>
+    {% else %}
+      <section class="cards" data-metrics="{{ url_for('server_metrics', server_id=server.id) }}" data-refresh="5000">
+        <article class="card" id="cpu-card">
+          <h2>CPU</h2>
+          <p class="value" id="cpu-value">{% if metrics.cpu is none %}Unavailable{% else %}{{ metrics.cpu }}%{% endif %}</p>
+        </article>
+        <article class="card" id="memory-card">
+          <h2>Memory</h2>
+          {% if metrics.memory is none %}
+            <p class="value" id="memory-value">Unavailable</p>
+          {% else %}
+            <ul class="facts" id="memory-value">
+              <li>Total {{ metrics.memory.total_mib }} MiB</li>
+              <li>Used {{ metrics.memory.used_mib }} MiB</li>
+              <li>Available {{ metrics.memory.available_mib }} MiB</li>
+              <li>Used {{ metrics.memory.used_percent }}%</li>
+            </ul>
+          {% endif %}
+        </article>
+        <article class="card" id="network-card">
+          <h2>Network</h2>
+          {% if metrics.network is none %}
+            <p class="value" id="network-value">Unavailable</p>
+          {% else %}
+            <div class="table-wrap" id="network-value">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Received</th>
+                    <th>Sent</th>
+                    <th>Receive</th>
+                    <th>Send</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in metrics.network %}
+                    <tr>
+                      <td>{{ row.name }}</td>
+                      <td>{{ row.bytes_received }} bytes</td>
+                      <td>{{ row.bytes_sent }} bytes</td>
+                      <td>{{ row.receive_rate }} bytes/s</td>
+                      <td>{{ row.send_rate }} bytes/s</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% endif %}
+        </article>
+        <article class="card" id="ports-card">
+          <h2>Ports</h2>
+          {% if metrics.ports is none %}
+            <p class="value" id="ports-value">Unavailable</p>
+          {% elif metrics.ports %}
+            <div class="table-wrap" id="ports-value">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Protocol</th>
+                    <th>Address</th>
+                    <th>Port</th>
+                    <th>Process</th>
+                    <th>PID</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in metrics.ports %}
+                    <tr>
+                      <td>{{ row.protocol }}</td>
+                      <td>{{ row.address }}</td>
+                      <td>{{ row.port }}</td>
+                      <td>{{ row.process }}</td>
+                      <td>{{ row.pid }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p class="value" id="ports-value">No listening ports.</p>
+          {% endif %}
+        </article>
+      </section>
+      <script src="{{ url_for('static', filename='monitor.js') }}"></script>
+    {% endif %}
+  </div>
+{% endblock %}
