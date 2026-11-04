@@ -1,11 +1,14 @@
 :root {
-  color-scheme: light;
-  --ink: #142033;
-  --muted: #3d4d63;
-  --paper: #f3f6f8;
-  --card: #ffffff;
-  --line: #d5dee8;
-  --accent: #0f6e6b;
+  color-scheme: dark;
+  --ink: #e7eef6;
+  --muted: #9aabbd;
+  --paper: #0e141b;
+  --card: #17202b;
+  --field: #101820;
+  --line: #2c3b4d;
+  --accent: #3dbeb6;
+  --accent-ink: #042221;
+  --danger: #ff8d8d;
 }
 
 * {
@@ -76,14 +79,14 @@ input {
   padding: 0.55rem 0.7rem;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: var(--card);
+  background: var(--field);
 }
 
 button {
   font: inherit;
   font-weight: 650;
   width: fit-content;
-  color: #ffffff;
+  color: var(--accent-ink);
   background: var(--accent);
   border: 0;
   border-radius: 8px;
@@ -99,7 +102,7 @@ button.quiet {
 
 .error {
   margin: 0;
-  color: #8d1d1d;
+  color: var(--danger);
   font-weight: 650;
 }
 
